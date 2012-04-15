@@ -131,10 +131,11 @@ int Smb380Sensor::readEvents(sensors_event_t* data, int count)
         int type = event->type;
         if (type == EV_ABS) {
             float value = event->value;
+	    // swap x and y axis and invert y axis value
             if (event->code == EVENT_TYPE_ACCEL_X) {
-                mPendingEvent.acceleration.x = value * CONVERT_A_X * -1.0F;
+                mPendingEvent.acceleration.y = value * CONVERT_A_X * -1.0F;
             } else if (event->code == EVENT_TYPE_ACCEL_Y) {
-                mPendingEvent.acceleration.y = value * CONVERT_A_Y * -1.0F;
+                mPendingEvent.acceleration.x = value * CONVERT_A_Y;
             } else if (event->code == EVENT_TYPE_ACCEL_Z) {
                 mPendingEvent.acceleration.z = value * CONVERT_A_Z;
             }
